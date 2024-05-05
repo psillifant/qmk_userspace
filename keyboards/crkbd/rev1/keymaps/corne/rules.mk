@@ -14,7 +14,7 @@ CONSOLE_ENABLE = no
 # https://docusaurus.qmk.fm/feature_command/
 COMMAND_ENABLE = no
 # Disable Mousekeys, I don't use mouse interface on this keyboard.
-MOUSEKEY_ENABLE = yes
+MOUSEKEY_ENABLE = no
 # Space Cadet is used to provide extra functions for shift, namely parantheses.
 # https://docusaurus.qmk.fm/feature_space_cadet
 SPACE_CADET_ENABLE = no
