@@ -26,3 +26,6 @@ GRAVE_ESC_ENABLE = no
 MAGIC_ENABLE = no
 # Disabling music. Pairs with NO_MUSIC_MODE in config.h
 MUSIC_ENABLE = no
+
+
+SRC += features/custom_shift_keys.c

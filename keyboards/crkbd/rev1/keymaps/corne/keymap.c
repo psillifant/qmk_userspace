@@ -18,42 +18,69 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 
-#define WLEFT_SPC LT(1, KC_SPC)
-#define WRGHT_SPC LT(1, KC_SPC)
-#define MLEFT_SPC LT(3, KC_SPC)
-#define MRGHT_SPC LT(3, KC_SPC)
+// Space behaviour
+  // Windows
+  #define W_LSPC LT(1, KC_SPC)
+  #define W_RSPC LT(1, KC_SPC)
+  // MacOS
+  #define M_LSPC LT(3, KC_SPC)
+  #define M_RSPC LT(3, KC_SPC)
+
+// Q becomes CMD or ALT when held
+  // Windows
+  #define W_QALT LALT_T(KC_Q)
+  // MacOS
+  #define M_QALT LGUI_T(KC_Q)
+
+// Tab becomes CMD or CTRL when held
+  // Windows
+  #define WTAB LCTL_T(KC_TAB)
+  // MacOS
+  #define MTAB LGUI_T(KC_TAB)
+
+// SDF on left hand, and JKL on right, become standard modifiers
+  #define F_GUI LGUI_T(KC_F)
+  #define D_ALT LALT_T(KC_D)
+  #define S_CTL LCTL_T(KC_S)
+  #define L_GUI LGUI_T(KC_L)
+  #define K_ALT LALT_T(KC_K)
+  #define J_CTL LCTL_T(KC_J)
+
+// Enter triggers the movement layer when held
+  #define MV_ENT   LT(4, KC_ENTER)
+
+// Custom Keycodes 
+  // "
+  #define MC_QUOT S(KC_QUOT)
+  // #
+  #define MC_HASH A(KC_3)
+  // ~
+  #define MC_TILD S(KC_GRAVE)
+  // @
+  #define MC_AT S(KC_2)
+  // "
+  #define MC_DBLQ S(KC_QUOTE)
+  // {
+  #define AC_CLBR S(KC_LBRC)
+  // }
+  #define AC_CRBR S(KC_RBRC)
 
 
-#define Q_TAB LALT_T(KC_Q)
-#define F_GUI LGUI_T(KC_F)
-#define D_ALT LALT_T(KC_D)
-#define S_CTL LCTL_T(KC_S)
-#define L_GUI LGUI_T(KC_L)
-#define K_ALT LALT_T(KC_K)
-#define J_CTL LCTL_T(KC_J)
-#define MINSGUI  LGUI_T(KC_MINS)
-// #define MINSMED  LT(3, KC_MINS)
-#define QUOTMED  LT(5, KC_QUOT)
-#define MV_ENT   LT(4, KC_ENTER)
-#define GRVMSE   LT(4, KC_GRAVE)
-#define T_QWERTY TO(0)
-#define T_GAMES  TO(5)
-
-#define HD_LSPC LT(1, KC_LALT)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // QWERTYWIN
     [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB,   Q_TAB,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
+         WTAB,  W_QALT,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       GRVMSE,    KC_A,   S_CTL,   D_ALT,   F_GUI,    KC_G,                         KC_H,   J_CTL,   K_ALT,   L_GUI, KC_SCLN, QUOTMED,
+     KC_GRAVE,    KC_A,   S_CTL,   D_ALT,   F_GUI,    KC_G,                         KC_H,   J_CTL,   K_ALT,   L_GUI, KC_SCLN, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  MV_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            KC_NO,   MO(6),WLEFT_SPC, WRGHT_SPC, MINSGUI,   KC_NO
+                                            KC_NO,   MO(5),  W_LSPC,     W_RSPC, KC_MINS,   KC_NO
                                       //`--------------------------'  `--------------------------'
   ),
+
     // Numbers and symbols (Activate: Either Space on QWERTYWIN)
     [1] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
@@ -61,31 +88,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
          KC_0,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_NUBS, KC_BTN1, KC_BTN2,S(KC_LBRC),KC_LBRC,                    KC_RBRC,S(KC_RBRC),KC_MINS,KC_EQUAL, KC_BSLS,LGUI(KC_ENTER),
+      _______, KC_NUBS, KC_BTN1, KC_BTN2, AC_CLBR, KC_LBRC,                      KC_RBRC, AC_CRBR,  KC_EQL, KC_BSLS,   KC_NO,  MV_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
+
     // QWERTYMACOS
     [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB,   Q_TAB,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
+         MTAB,  M_QALT,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       GRVMSE,    KC_A,   S_CTL,   D_ALT,   F_GUI,    KC_G,                         KC_H,   J_CTL,   K_ALT,   L_GUI, KC_SCLN, QUOTMED,
+     KC_GRAVE,    KC_A,   S_CTL,   D_ALT,   F_GUI,    KC_G,                         KC_H,   J_CTL,   K_ALT,   L_GUI, KC_SCLN, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  MV_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            KC_NO, KC_NO,  MLEFT_SPC,   MRGHT_SPC, MINSGUI,   KC_NO
+                                            KC_NO,   MO(5),  M_LSPC,     M_RSPC, KC_MINS,   KC_NO
                                       //`--------------------------'  `--------------------------'
   ),
+
     // Numbers and symbols (Activate: Either Space on QWERTYMACOS)
     [3] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_ESC,  KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
+       KC_ESC, KC_EXLM, MC_QUOT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
          KC_0,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_NUBS, KC_BTN1, KC_BTN2,S(KC_LBRC),KC_LBRC,                    KC_RBRC,S(KC_RBRC),KC_MINS,KC_EQUAL, KC_BSLS,LGUI(KC_ENTER),
+      _______, KC_BSLS, KC_BTN1, KC_BTN2, AC_CLBR, KC_LBRC,                      KC_RBRC, AC_CRBR,  KC_EQL, MC_HASH, KC_NO,  MV_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -104,51 +133,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-       // Media (Activate: Minus Sign)
+   // Functions (Activate: Enter + Space)
     [5] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_VOLU,                        KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_MPRV,   KC_NO,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_VOLD,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_MUTE,                      KC_MNXT,   KC_NO,   KC_NO,   KC_NO,   KC_NO, _______,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______, _______, _______
-                                      //`--------------------------'  `--------------------------'
-  ),
-
-  //   // MOUSE (Activate: Hold backtick / grave)
-  //   [4] = LAYOUT_split_3x6_3(
-  // //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-  //       KC_NO,   KC_NO, KC_MS_U,   KC_NO,   KC_NO, KC_WH_U,                        KC_NO, KC_MS_U,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
-  // //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //     _______, KC_MS_L, KC_MS_D, KC_MS_R,   KC_NO, KC_WH_D,                      KC_MS_L, KC_MS_D, KC_MS_R,   KC_NO,   KC_NO,   KC_NO,
-  // //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //     _______,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, _______,
-  // //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-  //                                         _______, _______, KC_BTN1,    KC_BTN2, _______, _______
-  //                                     //`--------------------------'  `--------------------------'
-  // ),
-
- 
-
-  //  // Helldivers
-  //   [5] = LAYOUT_split_3x6_3(
-  // //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-  //      KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_1,                         KC_Y,   KC_UP,    KC_I,    KC_O,   KC_P,  KC_BSPC,
-  // //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //    KC_GRAVE,    KC_A,    KC_S,    KC_D,    KC_F,    KC_2,                      KC_LEFT, KC_DOWN, KC_RGHT,    KC_L, KC_SCLN, QUOTMED,
-  // //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //     KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  MV_ENT,
-  // //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-  //                                         KC_LGUI,  KC_ESC, HD_LSPC,    KC_LCTL, KC_LALT, MINSGUI
-  //                                     //`--------------------------'  `--------------------------'
-  // ),
-
-   // Functions (Activate: Enter + Space)
-    [6] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO, T_GAMES,T_QWERTY,
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   TO(2),   TO(0),
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -183,3 +171,20 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 void keyboard_post_init_user(void) {
   // rgb_matrix_mode(RGB_MATRIX_CUSTOM_all_keys_white);
 };
+
+#include "features/custom_shift_keys.h" // Source: https://getreuer.info/posts/keyboards/custom-shift-keys/index.html
+const custom_shift_key_t custom_shift_keys[] = {
+  {KC_GRAVE   , KC_GRAVE},     // Shift ` is `
+  {MC_HASH    , MC_TILD},      // Shift # is ~
+  {KC_2       , MC_DBLQ},      // Shift 2 is "
+  {KC_QUOT    , MC_AT},        // Shift ' is @
+};
+uint8_t NUM_CUSTOM_SHIFT_KEYS =
+    sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);
+
+    bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+  if (!process_custom_shift_keys(keycode, record)) { return false; }
+  // Nothing else yet defined.
+
+  return true;
+}
