@@ -2,6 +2,7 @@
     "userspace_version": "1.0",
     "build_targets": [
         ["crkbd/rev1", "corne"],
-        ["sofle_choc", "soflec"]
+        ["sofle_choc", "soflec"],
+        ["crkbd/rev1", "corne5x3"]
     ]
 }
