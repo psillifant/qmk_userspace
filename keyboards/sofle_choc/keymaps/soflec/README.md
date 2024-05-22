@@ -2,10 +2,10 @@
 
 My sofle choc uses an rp2040 based controller, not the standard promicro.  Therefore, when flashing, things are a little different to normal.
 
-When compiling, run the following command, note the extra `-e` argument:
+When compiling, run the following command (note that the extra `-e` argument is no longer necessary here, as I've added the relevant rule to `rules.mk` instead):
 
 ```
-qmk compile -kb sofle_choc -km soflec -e CONVERT_TO=rp2040_ce
+qmk compile -kb sofle_choc -km soflec
 ```
 
 Then, to flash:
