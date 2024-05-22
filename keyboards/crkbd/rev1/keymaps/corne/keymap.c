@@ -18,6 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 
+// Prefixes
+//    W - Windows
+//    M - MacOS
+//    A - Any / All
+//    WC / MC / AC - Windows code, etc.  i.e. a single keycode that is custom.
 // Space behaviour
   // Windows
   #define W_LSPC LT(1, KC_SPC)
@@ -187,4 +192,4 @@ uint8_t NUM_CUSTOM_SHIFT_KEYS =
   // Nothing else yet defined.
 
   return true;
-}
+};
