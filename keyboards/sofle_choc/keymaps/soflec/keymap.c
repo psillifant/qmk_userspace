@@ -62,7 +62,7 @@
   #define J_CTL LCTL_T(KC_J)
 
 // Enter triggers the movement layer when held
-  #define MV_ENT   LT(4, KC_ENTER)
+  #define MV_ENT   LT(3, KC_ENTER)
 
 // Custom Keycodes 
   // "
